@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import juanguerra.menu_restaurante.modelo.AlimentoPedido;
+import juanguerra.menu_restaurante.modelo.Cola;
 import juanguerra.menu_restaurante.modelo.Pedido;
 
 // Clase para manejar los eventos en la interfaz grafica de Pedidos
@@ -21,6 +22,8 @@ public class Controlador_Pedidos {
 	@FXML	private ListView<AlimentoPedido> listaElementosPedido;
 	@FXML	private Button botonDespachar;
 	
+	private Cola<Pedido> colaPedidos;
+	
 	@FXML	// accion a realizar al pulsar el boton Nuevo
 	private void onBotonNuevoClicked(ActionEvent event) {
 		
@@ -28,7 +31,20 @@ public class Controlador_Pedidos {
 	
 	@FXML	// accion a realizar al pulsar el boton Despachar
 	private void onBotonDespacharClicked(ActionEvent event) {
-		
+		if(!colaPedidos.estaVacia()) {
+			Pedido pedido = colaPedidos.desencolar();
+			EntityManager manager = Main.emf.createEntityManager();
+			manager.getTransaction().begin();;
+			pedido = manager.merge(pedido);
+			pedido.entregar();
+			manager.getTransaction().commit();
+			manager.close();
+			listaPedidos.getItems().remove(pedido);
+			if(colaPedidos.getNumeroElementos() > 0)
+				botonDespachar.setDisable(false);
+			else
+				botonDespachar.setDisable(true);
+		}
 	}
 	
 	@FXML
@@ -39,6 +55,9 @@ public class Controlador_Pedidos {
 		listaElementosPedido.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
 		cargarPedidos();
+		
+		colaPedidos = new Cola<>(listaPedidos.getItems());
+		
 	}
 	
 	// método para cargar los pedidos
