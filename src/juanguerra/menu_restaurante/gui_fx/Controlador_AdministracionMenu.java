@@ -70,8 +70,10 @@ public class Controlador_AdministracionMenu {
 		Alimento alimento = listaAlimentos.getSelectionModel().getSelectedItem();
 		if(alimento != null) {
 			EntityManager manager = Main.emf.createEntityManager();
+			manager.getTransaction().begin();
 			alimento = manager.merge(alimento);
 			manager.remove(alimento);	
+			manager.getTransaction().commit();
 			listaAlimentos.getItems().remove(alimento);
 			listaAlimentos.getSelectionModel().clearSelection();
 			manager.close();
