@@ -1,5 +1,6 @@
 package juanguerra.menu_restaurante.gui_fx;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,10 +9,14 @@ import javax.persistence.Query;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.stage.Stage;
 import juanguerra.menu_restaurante.modelo.Alimento;
 import juanguerra.menu_restaurante.modelo.Menu;
 
@@ -24,16 +29,39 @@ public class Controlador_AdministracionMenu {
 	@FXML	private Button botonEditar;
 	@FXML	private Button botonEliminar;
 	
+	private Parent guiNuevo;
+	private Controlador_NuevoAlimento guiNuevoController;
+	
+	private Parent guiEdicion;
+	private Controlador_EditarAlimento guiEdicionController;
+	
 	@FXML	// método con la accion a ejecutar al pulsar el boton Nuevo
 	private void onBotonNuevoClicked(ActionEvent event) {
-		
+		Menu menu = choiceBoxMenu.getSelectionModel().getSelectedItem();
+		if(menu != null) {
+			guiNuevoController.borrar();
+			guiNuevoController.setMenu(menu);
+			Scene s = new Scene(guiNuevo, 400, 200);
+			Stage stage = new Stage();
+			stage.setScene(s);
+			stage.setResizable(false);
+			stage.showAndWait();
+			actualizarListaAlimentos(menu);
+		}
 	}
 	
 	@FXML	// método con la acción a ejecutar al pulsar el boton Editar
 	private void onBotonEditarClicked(ActionEvent event) {
 		Alimento alimento = listaAlimentos.getSelectionModel().getSelectedItem();
 		if(alimento != null) {
-			
+			guiEdicionController.borrar();
+			guiEdicionController.setAlimento(alimento);
+			Scene s = new Scene(guiEdicion, 400, 200);
+			Stage stage = new Stage();
+			stage.setScene(s);
+			stage.setResizable(false);
+			stage.showAndWait();
+			actualizarListaAlimentos(choiceBoxMenu.getSelectionModel().getSelectedItem());
 		}
 	}
 	
@@ -41,7 +69,8 @@ public class Controlador_AdministracionMenu {
 	private void onBotonEliminarClicked(ActionEvent event) {
 		Alimento alimento = listaAlimentos.getSelectionModel().getSelectedItem();
 		if(alimento != null) {
-			EntityManager manager = Main.emf.createEntityManager();			
+			EntityManager manager = Main.emf.createEntityManager();
+			alimento = manager.merge(alimento);
 			manager.remove(alimento);	
 			listaAlimentos.getItems().remove(alimento);
 			listaAlimentos.getSelectionModel().clearSelection();
@@ -51,6 +80,20 @@ public class Controlador_AdministracionMenu {
 	
 	@FXML
 	private void initialize() {
+		
+		
+		try {
+			FXMLLoader loaderGUINuevo = new FXMLLoader(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_NuevoAlimento.fxml"));
+			guiNuevo = loaderGUINuevo.load();
+			guiNuevoController = loaderGUINuevo.getController();
+			
+			FXMLLoader loaderGUIEdicion = new FXMLLoader(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_EditarAlimento.fxml"));
+			guiEdicion = loaderGUIEdicion.load();
+			guiEdicionController = loaderGUIEdicion.getController();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 		
 		// evento para actualizar la lista de alimentos cuando se cambie el menú seleccionado
 		choiceBoxMenu.getSelectionModel().selectedItemProperty().addListener( (observable,oldValue,newValue) -> actualizarListaAlimentos(newValue));
@@ -92,6 +135,7 @@ public class Controlador_AdministracionMenu {
 			EntityManager manager = Main.emf.createEntityManager();
 			menu = manager.merge(menu);
 			listaAlimentos.setItems(FXCollections.observableArrayList(menu.getAlimentos()));
+			listaAlimentos.getSelectionModel().clearSelection();
 			manager.close();
 		}
 	}
