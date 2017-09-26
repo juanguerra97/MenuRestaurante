@@ -66,7 +66,7 @@ public class Controlador_EditarAlimento {
 		alimento = null;
 		fieldNombre.setOnKeyTyped(k->{
 			String key = k.getCharacter();
-			if(!Character.isLetter(key.charAt(0)))
+			if(!Character.isLetter(key.charAt(0)) || key.charAt(0) != ' ')
 				k.consume();
 		});
 		fieldPrecio.setOnKeyTyped(k->{
