@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="juanguerra.menu_restaurante.gui_fx.Controlador_Pedidos">
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
    </padding>
@@ -18,8 +18,8 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
          <children>
-            <Button mnemonicParsing="false" text="Nuevo" />
-            <Button fx:id="botonDespachar" disable="true" mnemonicParsing="false" text="Despachar" />
+            <Button mnemonicParsing="false" onAction="#onBotonNuevoClicked" text="Nuevo" />
+            <Button fx:id="botonDespachar" disable="true" mnemonicParsing="false" onAction="#onBotonDespacharClicked" text="Despachar" />
          </children>
       </HBox>
    </top>
