@@ -14,26 +14,29 @@ public class Controlador_Inicio {
 	@FXML	private BorderPane panel;
 	
 	private Parent guiAdmon;
-	private Controlador_AdministracionMenu guiAdmonController;
 	
 	private Parent guiPedidos;
 
 	@FXML	// accion a realizar al seleccionar la opcion Administrar en el menu Inicio
 	private void onOpcionAdministrar(ActionEvent event) {
-		panel.setCenter(guiAdmon);
+		if(!panel.getCenter().equals(guiAdmon))
+			panel.setCenter(guiAdmon);
 	}
 	
 	@FXML	// accion a realizar al seleccionar la opcion Pedidos en el menu Inicio
 	private void onOpcionPedidos(ActionEvent event) {
-		
+		if(!panel.getCenter().equals(guiPedidos))
+			panel.setCenter(guiPedidos);
 	}
 	
 	@FXML
 	private void initialize() {
 		try {
-			FXMLLoader loaderGUIAdmon = new FXMLLoader(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_AdministracionMenu.fxml"));
-			guiAdmon = loaderGUIAdmon.load();
-			guiAdmonController = loaderGUIAdmon.getController();
+			guiAdmon = FXMLLoader.load(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_AdministracionMenu.fxml"));
+			
+			guiPedidos = FXMLLoader.load(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_Pedidos.fxml"));
+			
+			panel.setCenter(guiPedidos);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
