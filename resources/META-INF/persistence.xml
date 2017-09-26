@@ -6,6 +6,10 @@
 
   <persistence-unit name="MenuRestaurante">
   
+  	<class>juanguerra.restaurante.modelo.Menu</class>
+  	<class>juanguerra.restaurante.modelo.Alimento</class>
+  	<class>juanguerra.restaurante.modelo.Precio</class>
+  
     <properties>
         <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/Restaurante" />
