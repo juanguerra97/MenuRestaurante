@@ -1,5 +1,6 @@
 package juanguerra.menu_restaurante.gui_fx;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,9 +9,14 @@ import javax.persistence.Query;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextArea;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import juanguerra.menu_restaurante.modelo.AlimentoPedido;
 import juanguerra.menu_restaurante.modelo.Cola;
 import juanguerra.menu_restaurante.modelo.Pedido;
@@ -19,14 +25,34 @@ import juanguerra.menu_restaurante.modelo.Pedido;
 public class Controlador_Pedidos {
 
 	@FXML	private ListView<Pedido> listaPedidos;
-	@FXML	private ListView<AlimentoPedido> listaElementosPedido;
+	@FXML	private TextArea listaElementosPedido;
 	@FXML	private Button botonDespachar;
 	
 	private Cola<Pedido> colaPedidos;
 	
+	private Scene escenaNuevoPedido;
+	private Controlador_NuevoPedido nuevoPedidoController;
+	
 	@FXML	// accion a realizar al pulsar el boton Nuevo
 	private void onBotonNuevoClicked(ActionEvent event) {
-		
+		nuevoPedidoController.reiniciar();
+		nuevoPedidoController.iniciarTransaccion();
+		Stage ventana = new Stage();
+		ventana.setScene(escenaNuevoPedido);
+		ventana.setResizable(false);
+		ventana.initModality(Modality.APPLICATION_MODAL);
+		ventana.centerOnScreen();
+		ventana.setTitle("Nuevo");
+		ventana.setOnCloseRequest(w->{
+			try {
+				nuevoPedidoController.cancelarTransaccion();
+			}catch(Exception ex) {
+				
+			}
+		});
+		ventana.showAndWait();
+		cargarPedidos();
+		colaPedidos = new Cola<>(listaPedidos.getItems());
 	}
 	
 	@FXML	// accion a realizar al pulsar el boton Despachar
@@ -44,15 +70,23 @@ public class Controlador_Pedidos {
 				botonDespachar.setDisable(false);
 			else
 				botonDespachar.setDisable(true);
+			listaElementosPedido.setText("");
 		}
 	}
 	
 	@FXML
 	private void initialize() {
+		
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_NuevoPedido.fxml"));
+			escenaNuevoPedido = new Scene(loader.load(), 500, 400);
+			nuevoPedidoController = loader.getController();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		listaPedidos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		listaPedidos.getSelectionModel().selectedItemProperty().addListener( (observable,oldValue,newValue) -> actualizarListaElementosPedido(newValue));
-		
-		listaElementosPedido.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
 		cargarPedidos();
 		
@@ -67,8 +101,8 @@ public class Controlador_Pedidos {
 		
 		Query consultaPedidos = manager.createQuery( "SELECT p FROM Pedido p WHERE p.estado = 'TOMADO' ORDER BY p.numero ASC");// consulta para obtener todos los menús
 		listaPedidos.setItems(FXCollections.observableArrayList((List<Pedido>) consultaPedidos.getResultList()));
-		listaElementosPedido.setItems(FXCollections.observableArrayList());
-		if(listaElementosPedido.getItems().isEmpty())
+		listaElementosPedido.setText("");
+		if(listaPedidos.getItems().isEmpty())
 			botonDespachar.setDisable(true);
 		else
 			botonDespachar.setDisable(false);
@@ -81,7 +115,9 @@ public class Controlador_Pedidos {
 		if(pedido != null) {
 			EntityManager manager = Main.emf.createEntityManager();
 			pedido = manager.merge(pedido);
-			listaElementosPedido.setItems(FXCollections.observableArrayList(pedido.getAlimentosPedidos()));
+			listaElementosPedido.setText("");
+			List<AlimentoPedido> alimentosPedido = pedido.getAlimentosPedidos();
+			alimentosPedido.forEach(p->listaElementosPedido.appendText(p.toString() + "\n"));
 			manager.close();
 		}
 	}

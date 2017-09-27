@@ -10,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -30,10 +29,10 @@ public class Controlador_AdministracionMenu {
 	@FXML	private Button botonEditar;
 	@FXML	private Button botonEliminar;
 	
-	private Parent guiNuevo;
+	private Scene escenaNuevo;
 	private Controlador_NuevoAlimento guiNuevoController;
 	
-	private Parent guiEdicion;
+	private Scene escenaEdicion;
 	private Controlador_EditarAlimento guiEdicionController;
 	
 	@FXML	// método con la accion a ejecutar al pulsar el boton Nuevo
@@ -42,12 +41,12 @@ public class Controlador_AdministracionMenu {
 		if(menu != null) {
 			guiNuevoController.borrar();
 			guiNuevoController.setMenu(menu);
-			Scene s = new Scene(guiNuevo, 400, 200);
 			Stage stage = new Stage();
-			stage.setScene(s);
+			stage.setScene(escenaNuevo);
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Nuevo");
+			stage.centerOnScreen();
 			stage.showAndWait();
 			actualizarListaAlimentos(menu);
 		}
@@ -59,12 +58,12 @@ public class Controlador_AdministracionMenu {
 		if(alimento != null) {
 			guiEdicionController.borrar();
 			guiEdicionController.setAlimento(alimento);
-			Scene s = new Scene(guiEdicion, 400, 200);
 			Stage stage = new Stage();
-			stage.setScene(s);
+			stage.setScene(escenaEdicion);
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Edición");
+			stage.centerOnScreen();
 			stage.showAndWait();
 			actualizarListaAlimentos(choiceBoxMenu.getSelectionModel().getSelectedItem());
 		}
@@ -91,11 +90,11 @@ public class Controlador_AdministracionMenu {
 		
 		try {
 			FXMLLoader loaderGUINuevo = new FXMLLoader(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_NuevoAlimento.fxml"));
-			guiNuevo = loaderGUINuevo.load();
+			escenaNuevo = new Scene(loaderGUINuevo.load(), 400, 200);
 			guiNuevoController = loaderGUINuevo.getController();
 			
 			FXMLLoader loaderGUIEdicion = new FXMLLoader(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_EditarAlimento.fxml"));
-			guiEdicion = loaderGUIEdicion.load();
+			escenaEdicion  = new Scene(loaderGUIEdicion.load(), 400,200);
 			guiEdicionController = loaderGUIEdicion.getController();
 			
 		} catch (IOException e) {

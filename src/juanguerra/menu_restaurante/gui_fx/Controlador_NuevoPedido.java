@@ -139,7 +139,10 @@ public class Controlador_NuevoPedido {
 		spinnerCantidad.setValueFactory(intFactorySpinner);
 		spinnerCantidad.setEditable(false);
 		
-		choiceBoxMenu.getSelectionModel().selectedItemProperty().addListener( (observable,oldValue,newValue) -> actualizarAlimentosMenu(newValue));
+		choiceBoxMenu.getSelectionModel().selectedItemProperty().addListener( (observable,oldValue,newValue) -> {
+			actualizarAlimentosMenu(newValue);
+			listaElementosPedido.getSelectionModel().clearSelection();
+			});
 		
 		listaAlimentos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		listaAlimentos.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue) -> {
