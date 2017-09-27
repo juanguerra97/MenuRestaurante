@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="juanguerra.menu_restaurante.gui_fx.Controlador_NuevoPedido">
    <top>
       <Label maxWidth="1.7976931348623157E308" text="Nuevo pedido" BorderPane.alignment="CENTER">
          <font>
@@ -46,10 +46,10 @@
                </padding>
                <children>
                   <Label text="Cantidad" />
-                  <Spinner fx:id="spinnerCantidad" disable="true" />
+                  <Spinner fx:id="spinnerCantidad" />
                </children>
             </HBox>
-            <Button fx:id="botonAnadir" disable="true" mnemonicParsing="false" text="Añadir a la orden" />
+            <Button fx:id="botonAnadir" disable="true" mnemonicParsing="false" onAction="#onBotonAnadirClicked" text="Añadir a la orden" />
          </children>
       </VBox>
    </left>
@@ -74,7 +74,7 @@
                   <Insets bottom="5.0" left="3.0" right="3.0" top="5.0" />
                </padding>
                <children>
-                  <Button fx:id="botonMas" disable="true" mnemonicParsing="false">
+                  <Button fx:id="botonMas" disable="true" mnemonicParsing="false" onAction="#onBotonMasClicked">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -83,7 +83,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="botonMenos" disable="true" mnemonicParsing="false">
+                  <Button fx:id="botonMenos" disable="true" mnemonicParsing="false" onAction="#onBotonMenosClicked">
                      <graphic>
                         <ImageView disable="true" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -92,9 +92,9 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button disable="true" mnemonicParsing="false">
+                  <Button fx:id="botonQuitar" disable="true" mnemonicParsing="false" onAction="#onBotonQuitarClicked">
                      <graphic>
-                        <ImageView fx:id="botonQuitar" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@iconos/quit-icon.png" />
                            </image>
@@ -112,7 +112,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
          <children>
-            <Button fx:id="botonEnviar" disable="true" mnemonicParsing="false" text="Enviar">
+            <Button fx:id="botonEnviar" disable="true" mnemonicParsing="false" onAction="#onBotonEnviarClicked" text="Enviar">
                <font>
                   <Font size="14.0" />
                </font>
