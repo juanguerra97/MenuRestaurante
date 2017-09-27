@@ -13,10 +13,12 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	public static EntityManagerFactory emf;
+	
+	public static Stage stage;
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		
+		Main.stage = stage;
 		Parent root = FXMLLoader.load(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_Inicio.fxml"));
 		Scene escena = new Scene(root, 600, 450);
 		stage.setScene(escena);
@@ -27,6 +29,7 @@ public class Main extends Application {
 				try {emf.close();}catch(Exception ex) {ex.printStackTrace();}
 			}
 		});
+		stage.setMaximized(true);
 		stage.show();
 
 	}

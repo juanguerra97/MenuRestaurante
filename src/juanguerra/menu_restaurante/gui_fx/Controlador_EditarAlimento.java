@@ -38,12 +38,7 @@ public class Controlador_EditarAlimento {
 				fieldPrecio.setText("" + precio.getPrecio());
 			}
 			manager.getTransaction().commit();// se confirma la transacción
-			Alert alertaExito = new Alert(AlertType.INFORMATION, "", new ButtonType("Volver"));
-			alertaExito.setTitle("Mensaje");
-			alertaExito.setHeaderText("Se actualizó un registro");	
-			alertaExito.setContentText("Se actualizó el alimento: " + alimento.getNombre());
-			alertaExito.showAndWait();
-			borrar();
+			fieldNombre.getScene().getWindow().hide();
 		}catch(IllegalArgumentException ex) {
 			manager.getTransaction().rollback();// no se  realiza la transacción
 			alertaErrores.setTitle("ERROR");

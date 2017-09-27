@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import juanguerra.menu_restaurante.modelo.Alimento;
@@ -47,6 +48,7 @@ public class Controlador_AdministracionMenu {
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Nuevo");
 			stage.centerOnScreen();
+			stage.getIcons().add(new Image(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/iconos/new-icon.png").toString()));
 			stage.showAndWait();
 			actualizarListaAlimentos(menu);
 		}
@@ -63,6 +65,7 @@ public class Controlador_AdministracionMenu {
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Edición");
+			stage.getIcons().add(new Image(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/iconos/edit-icon.png").toString()));
 			stage.centerOnScreen();
 			stage.showAndWait();
 			actualizarListaAlimentos(choiceBoxMenu.getSelectionModel().getSelectedItem());

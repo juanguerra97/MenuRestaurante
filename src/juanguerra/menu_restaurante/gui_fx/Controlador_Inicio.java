@@ -19,14 +19,18 @@ public class Controlador_Inicio {
 
 	@FXML	// accion a realizar al seleccionar la opcion Administrar en el menu Inicio
 	private void onOpcionAdministrar(ActionEvent event) {
-		if(!panel.getCenter().equals(guiAdmon))
+		if(!panel.getCenter().equals(guiAdmon)) {
 			panel.setCenter(guiAdmon);
+			Main.stage.setTitle("Administración");
+		}
 	}
 	
 	@FXML	// accion a realizar al seleccionar la opcion Pedidos en el menu Inicio
 	private void onOpcionPedidos(ActionEvent event) {
-		if(!panel.getCenter().equals(guiPedidos))
+		if(!panel.getCenter().equals(guiPedidos)) {
 			panel.setCenter(guiPedidos);
+			Main.stage.setTitle("Pedidos");
+		}
 	}
 	
 	@FXML
@@ -37,6 +41,7 @@ public class Controlador_Inicio {
 			guiPedidos = FXMLLoader.load(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_Pedidos.fxml"));
 			
 			panel.setCenter(guiPedidos);
+			Main.stage.setTitle("Pedidos");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

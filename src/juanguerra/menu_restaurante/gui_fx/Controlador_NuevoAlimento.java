@@ -38,14 +38,7 @@ public class Controlador_NuevoAlimento {
 					manager.persist(nuevo);
 					manager.persist(pNuevo);
 					manager.getTransaction().commit();// se confirma la transacción
-					Alert alertaExito = new Alert(AlertType.INFORMATION, "", new ButtonType("Volver"));
-					alertaExito.setTitle("Mensaje");
-					alertaExito.setHeaderText("Se ingresó un nuevo registro");	
-					alertaExito.setContentText("Se ingresó el alimento: " + nuevo.getNombre());
-					alertaExito.showAndWait();
-					fieldAlimento.clear();
-					fieldPrecioUnitario.clear();
-					fieldAlimento.requestFocus();
+					fieldMenu.getScene().getWindow().hide();
 				}catch(Exception ex) {
 					manager.getTransaction().rollback();// no se realiza la transaccion
 					alertaErrores.setTitle("ERROR");
@@ -99,6 +92,7 @@ public class Controlador_NuevoAlimento {
 		fieldMenu.clear();
 		fieldAlimento.clear();
 		fieldPrecioUnitario.clear();
+		fieldAlimento.requestFocus();
 	}
 	
 }
