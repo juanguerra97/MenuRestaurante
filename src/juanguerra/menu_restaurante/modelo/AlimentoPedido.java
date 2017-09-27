@@ -118,7 +118,7 @@ public class AlimentoPedido implements Serializable {
     }
     
     @Override
-    public String toString(){return "Pedido: " + pedido + ", " +  precio.toString() + " x " + cantidad;}
+    public String toString(){return precio.toString() + " x " + cantidad ;}
 
 	@Override
 	public int hashCode() {

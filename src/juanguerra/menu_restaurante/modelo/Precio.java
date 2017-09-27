@@ -108,7 +108,7 @@ public class Precio implements Serializable {
     }
     
     @Override
-    public String toString(){return nombreMedida + " de " + alimento + " " + FORMATO_MONEDA.format(precio);}
+    public String toString(){return alimento + " " + FORMATO_MONEDA.format(precio);}
 
 	@Override
 	public int hashCode() {

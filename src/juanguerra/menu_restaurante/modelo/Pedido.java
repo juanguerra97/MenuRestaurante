@@ -259,7 +259,7 @@ public class Pedido implements Serializable {
     }
     
     @Override
-    public String toString(){return "Número: " + numero + ", fecha y hora: " + horaPedido;}
+    public String toString(){return "#" + numero + ", Hora: " + horaPedido.toLocalTime();}
 
     @Override
     public int hashCode() {
