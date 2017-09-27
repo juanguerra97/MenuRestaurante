@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import juanguerra.menu_restaurante.modelo.AlimentoPedido;
@@ -42,7 +43,8 @@ public class Controlador_Pedidos {
 		ventana.setResizable(false);
 		ventana.initModality(Modality.APPLICATION_MODAL);
 		ventana.centerOnScreen();
-		ventana.setTitle("Nuevo");
+		ventana.setTitle("Nuevo pedido");
+		ventana.getIcons().add(new Image(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/iconos/ordering-icon.png").toString()));
 		ventana.setOnCloseRequest(w->{
 			try {
 				nuevoPedidoController.cancelarTransaccion();
@@ -79,7 +81,7 @@ public class Controlador_Pedidos {
 		
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/GUI_NuevoPedido.fxml"));
-			escenaNuevoPedido = new Scene(loader.load(), 500, 400);
+			escenaNuevoPedido = new Scene(loader.load(), 650, 450);
 			nuevoPedidoController = loader.getController();
 		} catch (IOException e) {
 			e.printStackTrace();
