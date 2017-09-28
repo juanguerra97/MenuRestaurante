@@ -64,7 +64,7 @@ public class Controlador_AdministracionMenu {
 			stage.setScene(escenaEdicion);
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
-			stage.setTitle("EdiciÃ³n");
+			stage.setTitle("Edición");
 			stage.getIcons().add(new Image(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/iconos/edit-icon.png").toString()));
 			stage.centerOnScreen();
 			stage.showAndWait();
