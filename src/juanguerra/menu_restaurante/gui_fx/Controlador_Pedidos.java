@@ -6,18 +6,23 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.controlsfx.control.Notifications;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import juanguerra.menu_restaurante.modelo.AlimentoPedido;
 import juanguerra.menu_restaurante.modelo.Cola;
 import juanguerra.menu_restaurante.modelo.Pedido;
@@ -60,11 +65,17 @@ public class Controlador_Pedidos {
 	@FXML	// accion a realizar al pulsar el boton Despachar
 	private void onBotonDespacharClicked(ActionEvent event) {
 		if(!colaPedidos.estaVacia()) {
+			Notifications notificacionPedidoTomado = Notifications.create();
+			notificacionPedidoTomado.title("Se despachó un pedido!");
+			notificacionPedidoTomado.graphic(new ImageView(new Image(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/iconos/basket-accept-icon.png").toString())));
+			notificacionPedidoTomado.position(Pos.TOP_RIGHT);
+			notificacionPedidoTomado.hideAfter(Duration.seconds(3));			
 			Pedido pedido = colaPedidos.desencolar();
 			EntityManager manager = Main.emf.createEntityManager();
 			manager.getTransaction().begin();;
 			pedido = manager.merge(pedido);
 			pedido.entregar();
+			notificacionPedidoTomado.text(pedido.toString());
 			manager.getTransaction().commit();
 			manager.close();
 			listaPedidos.getItems().remove(pedido);
@@ -73,6 +84,7 @@ public class Controlador_Pedidos {
 			else
 				botonDespachar.setDisable(true);
 			listaElementosPedido.setText("");
+			notificacionPedidoTomado.show();
 		}
 	}
 	
