@@ -21,7 +21,7 @@ public class Controlador_Inicio {
 	private void onOpcionAdministrar(ActionEvent event) {
 		if(!panel.getCenter().equals(guiAdmon)) {
 			panel.setCenter(guiAdmon);
-			Main.stage.setTitle("AdministraciÃ³n");
+			Main.stage.setTitle("Administración");
 		}
 	}
 	
