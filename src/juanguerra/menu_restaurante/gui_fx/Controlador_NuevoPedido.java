@@ -21,6 +21,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import juanguerra.menu_restaurante.modelo.Alimento;
@@ -44,6 +45,8 @@ public class Controlador_NuevoPedido {
 	
 	private EntityManager manager;// entity manager
 	private Pedido pedido;// pedido que se está ingresando
+	
+	private AudioClip notificacion;
 	
 	@FXML	// evento del boton añadir
 	private void onBotonAnadirClicked(ActionEvent event) {
@@ -91,6 +94,7 @@ public class Controlador_NuevoPedido {
 			confirmarTransaccion();
 			v.close();
 			notificacionPedidoTomado.show();
+			notificacion.play();
 		}
 	}
 	
@@ -184,6 +188,9 @@ public class Controlador_NuevoPedido {
 		});
 		
 		reiniciar();
+		
+		notificacion = new AudioClip(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/sonidos/job-done.mp3").toString());
+		
 	}
 	
 	// método para reiniciar la interfaz

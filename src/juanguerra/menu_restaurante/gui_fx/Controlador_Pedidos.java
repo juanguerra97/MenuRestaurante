@@ -20,6 +20,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -38,6 +39,7 @@ public class Controlador_Pedidos {
 	
 	private Scene escenaNuevoPedido;
 	private Controlador_NuevoPedido nuevoPedidoController;
+	private AudioClip notificacion;
 	
 	@FXML	// accion a realizar al pulsar el boton Nuevo
 	private void onBotonNuevoClicked(ActionEvent event) {
@@ -85,6 +87,7 @@ public class Controlador_Pedidos {
 				botonDespachar.setDisable(true);
 			listaElementosPedido.setText("");
 			notificacionPedidoTomado.show();
+			notificacion.play();
 		}
 	}
 	
@@ -105,6 +108,8 @@ public class Controlador_Pedidos {
 		cargarPedidos();
 		
 		colaPedidos = new Cola<>(listaPedidos.getItems());
+		
+		notificacion = new AudioClip(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/sonidos/served.mp3").toString());
 		
 	}
 	
