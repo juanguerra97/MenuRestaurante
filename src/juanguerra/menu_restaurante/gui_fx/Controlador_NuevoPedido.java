@@ -6,17 +6,23 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.controlsfx.control.Notifications;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import juanguerra.menu_restaurante.modelo.Alimento;
 import juanguerra.menu_restaurante.modelo.AlimentoPedido;
 import juanguerra.menu_restaurante.modelo.Menu;
@@ -75,9 +81,16 @@ public class Controlador_NuevoPedido {
 			pedido.setHoraPedido(LocalDateTime.now());
 			pedido.setEstado("TOMADO");
 			elementos.forEach(e->manager.persist(e));
-			confirmarTransaccion();
 			Stage v = (Stage) choiceBoxMenu.getScene().getWindow();
+			Notifications notificacionPedidoTomado = Notifications.create();
+			notificacionPedidoTomado.title("Nuevo pedido agregado!");
+			notificacionPedidoTomado.graphic(new ImageView(new Image(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/iconos/check-icon.png").toString())));
+			notificacionPedidoTomado.position(Pos.TOP_RIGHT);
+			notificacionPedidoTomado.hideAfter(Duration.seconds(3));
+			notificacionPedidoTomado.text(pedido.toString());
+			confirmarTransaccion();
 			v.close();
+			notificacionPedidoTomado.show();
 		}
 	}
 	
