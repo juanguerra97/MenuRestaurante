@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -24,6 +25,7 @@ public class Main extends Application {
 		stage.setScene(escena);
 		stage.setMinWidth(600);
 		stage.setMinHeight(400);
+		stage.getIcons().add(new Image(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/iconos/restaurant-icon.png").toString()));
 		stage.setOnCloseRequest(e->{
 			if(emf != null) {
 				try {emf.close();}catch(Exception ex) {ex.printStackTrace();}
