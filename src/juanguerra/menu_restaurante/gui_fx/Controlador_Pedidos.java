@@ -68,7 +68,7 @@ public class Controlador_Pedidos {
 	private void onBotonDespacharClicked(ActionEvent event) {
 		if(!colaPedidos.estaVacia()) {
 			Notifications notificacionPedidoTomado = Notifications.create();
-			notificacionPedidoTomado.title("Se despachó un pedido!");
+			notificacionPedidoTomado.title("Se despachÃ³ un pedido!");
 			notificacionPedidoTomado.graphic(new ImageView(new Image(getClass().getResource("/juanguerra/menu_restaurante/gui_fx/iconos/basket-accept-icon.png").toString())));
 			notificacionPedidoTomado.position(Pos.TOP_RIGHT);
 			notificacionPedidoTomado.hideAfter(Duration.seconds(3));			

@@ -107,6 +107,8 @@ public class Controlador_NuevoPedido {
 			if( i >= 0) {
 				ap.reducirCantidad(1);
 				elementos.set(i, ap);
+				if(ap.getCantidad() <= 1 && !botonMenos.isDisabled())
+					botonMenos.setDisable(true);
 			}
 			listaElementosPedido.getSelectionModel().select(ap);
 		}
@@ -129,12 +131,13 @@ public class Controlador_NuevoPedido {
 			ObservableList<AlimentoPedido> elementos = listaElementosPedido.getItems();
 			int i = elementos.indexOf(ap);
 			if( i >= 0) {
-				ap.aumentarCantidad(1);
-				elementos.set(i, ap);
+				if(ap.getCantidad() < 50) {
+					ap.aumentarCantidad(1);
+					elementos.set(i, ap);
+				}
+				if(ap.getCantidad() > 1 && ap.getCantidad() < 50 && botonMenos.isDisabled())
+					botonMenos.setDisable(false);
 			}
-			if(elementos.size() > 1 && botonMenos.isDisabled())
-				botonMenos.setDisable(false);
-				
 			listaElementosPedido.getSelectionModel().select(ap);
 		}
 	}
@@ -184,6 +187,8 @@ public class Controlador_NuevoPedido {
 				setDisabledBotonesElementosPedidos(false);
 				if(newValue.getCantidad() <= 1)
 					botonMenos.setDisable(true);
+				if(newValue.getCantidad() >= 50)
+					botonMas.setDisable(true);
 			}
 		});
 		
