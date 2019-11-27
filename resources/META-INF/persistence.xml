@@ -14,7 +14,7 @@
   
     <properties>
         <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/Restaurante" />
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.10.10/Restaurante" />
         <property name="javax.persistence.jdbc.user" value="admin" />
         <property name="javax.persistence.jdbc.password" value="admin" />
         <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
